@@ -1,8 +1,10 @@
 from django.shortcuts import render
 
 finches = [
-    {'name': 'Lolo', 'breed': 'tabby', 'description': 'furry little demon', 'age': 3},
-    {'name': 'Sachi', 'breed': 'calico', 'description': 'gentle and loving', 'age': 2},
+    { 'name': 'Tweety', 'breed': 'House', 'Latin': 'Haemorhous Mexicanus', 'age': 3 },
+    { 'name': 'Sachmo', 'breed': 'Purple', 'Latin': 'Haemorhous Purpureus', 'age': 2 }, 
+    { 'name': 'River', 'breed': 'American Gold',
+     'Latin': 'Spinus Tristis', 'age': 0 },
 ]
 
 # Create your views here.
