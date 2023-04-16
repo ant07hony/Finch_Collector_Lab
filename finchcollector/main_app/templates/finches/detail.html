@@ -3,21 +3,63 @@
 
 <h1>Finch Details</h1>
 
-<div class="card">
-  <div class="card-content">
-    <span class="card-title">{{ finch.name }}</span>
-    <p>Breed: {{ finch.breed }}</p>
-    <p>Latin: {{ finch.Latin }}</p>
-    {% if finch.age > 0 %}
-      <p>Age: {{ finch.age }}</p>
-    {% else %}
-      <p>Age: Chick</p>
-    {% endif %}
+<div class="row">
+  <div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ finch.name }}</span>
+        <p>Breed: {{ finch.breed }}</p>
+        <p>Latin: {{ finch.Latin }}</p>
+        {% if finch.age > 0 %}
+          <p>Age: {{ finch.age }}</p>
+        {% else %}
+          <p>Age: Chick</p>
+        {% endif %}
+      </div>
+      <div class="card-action">
+        <a href="{% url 'finches_update' finch.id%}">Edit</a>
+        <a href="{% url 'finches_delete' finch.id%}">Delete</a>
+      </div>  
+    </div>
   </div>
-  <div class="card-action">
-    <a href="{% url 'finches_update' finch.id%}">Edit</a>
-    <a href="{% url 'finches_delete' finch.id%}">Delete</a>
-  </div>  
-</div>
+  <div class="col s6">
+    {% comment %} beginning of form to add finch sighting {% endcomment %}
+    <form action="{% url 'add_sighting' finch.id %}" method="POST">
+      {% csrf_token %}
+      <!-- Render the inputs -->
+      {{ sighting_form.as_p }}
+      <input type="submit" class="btn" value="Add Sighting">
+    </form>
+    {% comment %} end of form to add finch sighting {% endcomment %}
 
+    {% comment %} display of record of finch sighting below {% endcomment %}
+    <table class="striped">
+      <thead>
+        <tr><th>Date</th><th>When</th></tr>
+      </thead>
+      <tbody>
+        {% for sighting in finch.sighting_set.all %}
+          <tr>
+            <td>{{sighting.date}}</td>
+            <td>{{sighting.get_time_display}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+  const dateEl = document.getElementById('id_date');
+  // M is Materialize's global variable
+  M.Datepicker.init(dateEl, {
+    format: 'yyyy-mm-dd',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+  });
+
+   // add additional JS to initialize select below
+   const selectEl = document.getElementById('id_time');
+   M.FormSelect.init(selectEl);
+</script>
 {% endblock%}

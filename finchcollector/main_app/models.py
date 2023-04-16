@@ -29,8 +29,8 @@ class Finch(models.Model):
     
 
 class Sighting(models.Model):
-    date = models.DateTimeField('Finch Sighting')
-    location = models.CharField(max_length=2, choices=WHEN, default=WHEN[0][0]
+    date = models.DateField('Finch Sighting')
+    time = models.CharField(max_length=2, choices=WHEN, default=WHEN[0][0]
     
     )
     
@@ -38,6 +38,9 @@ class Sighting(models.Model):
    
     def __str__(self):
         # Nice method for obtaining the friendly value of a Field.choice
-        return f"{self.get_location_display()} on {self.date}"
+        return f"{self.get_time_display()} on {self.date}"
+    
+    class Meta:
+        ordering = ['-date']
     
  
