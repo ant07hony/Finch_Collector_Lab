@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Finch
 
 # finches = [
@@ -26,3 +27,22 @@ def finches_detail(request, finch_id):
     return render(request, 'finches/detail.html', {
         'finch': finch
     })
+    
+    
+class FinchCreate(CreateView):
+    model = Finch
+    fields = '__all__'
+    # Special string pattern Django will use
+    # success_url = '/finches/{finch_id}' <- what it may look like under the hood
+    # Or if you wanted to redirect to the index page
+    # success_url = '/finches' 
+    
+class FinchUpdate(UpdateView):
+    model = Finch
+    fields = ['breed', 'Latin', 'age']
+    
+
+class FinchDelete(DeleteView):
+    model = Finch
+    success_url = '/all_finches'
+    
